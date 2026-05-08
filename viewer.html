@@ -362,24 +362,12 @@
 
 
     .round-title.final-round {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      align-self: start;
-      justify-self: start;
-    
-      width: auto;
-      height: auto;
-      min-height: 0;
-    
       color: #2b1b00;
       background: #fff3cf;
       border: 1px solid rgba(246,168,0,0.42);
-      padding: 8px 12px;
+      padding: 8px 10px;
       border-radius: 999px;
-    
-      line-height: 1.1;
-      white-space: nowrap;
+      width: fit-content;
     }
 
     .match-label {
@@ -598,36 +586,106 @@
       }
     }
 
-    @media (max-width: 640px) {
-      .app { width: min(100% - 20px, 1380px); }
-      .hero { padding: 20px; }
+    @media (max-width: 760px) {
+      .app { width: min(100% - 18px, 1380px); }
+      .topbar {
+        align-items: flex-start;
+      }
+      .hero { padding: 20px; border-radius: 26px; }
       .hero h2 { font-size: clamp(2rem, 14vw, 3.4rem); }
       .hero p { font-size: 0.94rem; }
-      .live-match { grid-template-columns: 1fr; font-size: 1.35rem; }
+      .live-match { grid-template-columns: 1fr; font-size: 1.35rem; gap: 8px; }
       .live-match .vs { text-align: left; }
       .live-card { padding: 17px; }
+      .logo-wrap {
+        align-items: flex-start;
+      }
       .logo-wrap img { width: 102px; height: 52px; }
+      h1 { font-size: 1.26rem; }
+      .school { font-size: 0.72rem; white-space: normal; }
       .match-row { grid-template-columns: 1fr; }
-      .bracket-event { padding: 14px; overflow-x: visible; }
-      .bracket-board,
-      .bracket-board.three-rounds {
-        min-width: 0;
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .round {
-        gap: 10px;
-        align-content: start;
-      }
-      .bracket-match {
-        min-height: 0;
-      }
-      .bracket-match::after {
-        display: none;
+
+      .bracket-event {
+        padding: 12px;
+        border-radius: 22px;
+        overflow-x: visible;
       }
       .bracket-title {
         align-items: flex-start;
         flex-direction: column;
+        margin-bottom: 12px;
+      }
+      .bracket-title h3 {
+        font-size: 1.1rem;
+      }
+      .bracket-format {
+        white-space: normal;
+        line-height: 1.35;
+      }
+
+      .bracket-board,
+      .bracket-board.three-rounds {
+        min-width: 0;
+        grid-template-columns: 1fr;
+        gap: 13px;
+      }
+
+      .round {
+        gap: 10px;
+        padding: 12px;
+        border: 1px solid var(--gx-line);
+        border-radius: 18px;
+        background: #f8fbff;
+      }
+
+      .round-title {
+        display: inline-flex;
+        width: fit-content;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: #edf6ff;
+        border: 1px solid rgba(20,106,163,0.16);
+        margin-bottom: 2px;
+      }
+
+      .round-title.final-round {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: start;
+        justify-self: start;
+        width: fit-content;
+        height: auto;
+        min-height: 0;
+        line-height: 1.1;
+        white-space: normal;
+      }
+
+      .bracket-match {
+        min-height: 0;
+        padding: 10px;
+        background: white;
+      }
+      .bracket-match::after {
+        display: none;
+      }
+      .bracket-slot {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.95rem;
+        padding: 9px;
+      }
+      .match-label {
+        font-size: 0.72rem;
+        margin-bottom: 7px;
+      }
+      .champion-card {
+        min-height: 96px;
+      }
+      .champion-name {
+        font-size: 1.08rem;
       }
     }
   </style>
@@ -747,6 +805,7 @@
       mixed_sf1: { stage: "Mixed SF1", format: "15-point BO1", type: "bo1", slots: () => [winner("mixed_qf1") || "Winner QF1", winner("mixed_qf2") || "Winner QF2"] },
       womens_sf2: { stage: "Women's SF2", format: "15-point BO1", type: "bo1", slots: () => draw.womens.sf2 },
       mixed_sf2: { stage: "Mixed SF2", format: "15-point BO1", type: "bo1", slots: () => [winner("mixed_qf3") || "Winner QF3", winner("mixed_qf4") || "Winner QF4"] },
+      mixed_bronze: { stage: "Mixed Bronze", format: "15-point BO1", type: "bo1", slots: () => [loser("mixed_sf1") || "Loser SF1", loser("mixed_sf2") || "Loser SF2"] },
       mixed_final: { stage: "Mixed Final", format: "15-point BO3", type: "bo3", slots: () => [winner("mixed_sf1") || "Winner SF1", winner("mixed_sf2") || "Winner SF2"] },
 
       mens_ga1: { stage: "Men's Group A M1", format: "11-point BO1", type: "bo1", group: "A", slots: () => [draw.mens.groupA[0], draw.mens.groupA[1]] },
@@ -772,7 +831,7 @@
     };
 
     const matchOrder = [
-      "mixed_qf1", "mixed_qf2", "mixed_qf3", "mixed_qf4", "womens_sf1", "mixed_sf1", "womens_sf2", "mixed_sf2", "mixed_final",
+      "mixed_qf1", "mixed_qf2", "mixed_qf3", "mixed_qf4", "womens_sf1", "mixed_sf1", "womens_sf2", "mixed_sf2", "mixed_bronze", "mixed_final",
       "mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "mens_bronze", "womens_final", "mens_final"
     ];
 
@@ -985,7 +1044,7 @@
         <article class="bracket-event">
           <div class="bracket-title">
             <h3>Mixed Doubles 混双</h3>
-            <div class="bracket-format">QF/SF: 15 BO1 · Final: 15 BO3</div>
+            <div class="bracket-format">QF/SF/Bronze: 15 BO1 · Final: 15 BO3</div>
           </div>
           <div class="bracket-board">
             <div class="round">
@@ -1001,8 +1060,9 @@
               ${bracketMatch("mixed_sf2")}
             </div>
             <div class="round">
-              <div class="round-title final-round">Championship Final</div>
-              ${bracketMatch("mixed_final", "Mixed Doubles Final")}
+              <div class="round-title final-round">Final / Bronze</div>
+              ${bracketMatch("mixed_final", "Championship Final")}
+              ${bracketMatch("mixed_bronze", "Third-place Match")}
             </div>
             <div class="round">
               <div class="round-title">Champion</div>

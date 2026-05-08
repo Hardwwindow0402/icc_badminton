@@ -702,12 +702,13 @@
         const B = groupRanking("B");
         return [mensGroupComplete("B") ? B[0].name : "Group B #1", mensGroupComplete("A") ? A[1].name : "Group A #2"];
       }},
+      mens_bronze: { stage: "Men's Bronze", format: "15-point BO1", type: "bo1", day: "day2", event: "mens", slots: () => [loser("mens_sf1") || "Loser SF1", loser("mens_sf2") || "Loser SF2"] },
       womens_final: { stage: "Women's Final", format: "15-point BO1", type: "bo1", day: "day2", event: "womens", slots: () => [winner("womens_sf1") || "Winner SF1", winner("womens_sf2") || "Winner SF2"] },
       mens_final: { stage: "Men's Final", format: "15-point BO3", type: "bo3", day: "day2", event: "mens", slots: () => [winner("mens_sf1") || "Winner SF1", winner("mens_sf2") || "Winner SF2"] }
     };
 
     const day1Order = ["mixed_qf1", "mixed_qf2", "mixed_qf3", "mixed_qf4", "womens_sf1", "mixed_sf1", "womens_sf2", "mixed_sf2", "mixed_final"];
-    const day2Order = ["mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "womens_final", "mens_final"];
+    const day2Order = ["mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "mens_bronze", "womens_final", "mens_final"];
 
     function loadJSON(key, fallback) {
       try {
@@ -1028,6 +1029,7 @@
           lines: [
             `SF1：${matchDefs.mens_sf1.slots()[0]} vs ${matchDefs.mens_sf1.slots()[1]}`,
             `SF2：${matchDefs.mens_sf2.slots()[0]} vs ${matchDefs.mens_sf2.slots()[1]}`,
+            `Bronze：${matchDefs.mens_bronze.slots()[0]} vs ${matchDefs.mens_bronze.slots()[1]}`,
             `Final：${winner("mens_sf1") || "Winner SF1"} vs ${winner("mens_sf2") || "Winner SF2"}`,
             `Champion：${winner("mens_final") || "TBD"}`
           ]

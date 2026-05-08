@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GXICC国三年级羽毛球联赛 · Audience View</title>
+  <title>GXICC国三年级羽毛球联赛 · Draw Ceremony</title>
   <style>
     :root {
       --gx-orange: #f6a800;
@@ -14,10 +14,8 @@
       --gx-bg: #f4f7fb;
       --gx-card: #ffffff;
       --gx-line: #dce6f1;
-      --gx-green: #13a66f;
-      --gx-red: #dc4a3d;
       --gx-shadow: 0 18px 44px rgba(15, 45, 75, 0.12);
-      --radius: 24px;
+      --radius: 22px;
     }
 
     * { box-sizing: border-box; }
@@ -28,41 +26,43 @@
       color: var(--gx-ink);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       background:
-        radial-gradient(circle at 10% 0%, rgba(246, 168, 0, 0.20), transparent 34%),
-        radial-gradient(circle at 90% 5%, rgba(20, 106, 163, 0.24), transparent 34%),
+        radial-gradient(circle at 10% 0%, rgba(246, 168, 0, 0.22), transparent 34%),
+        radial-gradient(circle at 90% 7%, rgba(20, 106, 163, 0.22), transparent 34%),
         linear-gradient(180deg, #ffffff 0%, var(--gx-bg) 55%, #edf4fb 100%);
     }
 
     a { color: inherit; text-decoration: none; }
-    button { font: inherit; border: 0; cursor: pointer; }
+
+    button, select { font: inherit; }
+    button { border: 0; cursor: pointer; }
 
     .app {
-      width: min(1380px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 22px 0 70px;
+      padding: 26px 0 64px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       gap: 18px;
-      margin-bottom: 16px;
+      align-items: center;
+      margin-bottom: 22px;
     }
 
     .logo-wrap {
       display: flex;
-      align-items: center;
       gap: 14px;
+      align-items: center;
       min-width: 0;
     }
 
     .logo-wrap img {
-      width: 132px;
-      height: 64px;
+      width: 126px;
+      height: 62px;
       object-fit: contain;
-      background: #fff;
-      border-radius: 15px;
+      background: white;
+      border-radius: 14px;
       padding: 6px;
       box-shadow: var(--gx-shadow);
       border: 1px solid rgba(20,106,163,0.12);
@@ -74,23 +74,13 @@
       font-weight: 950;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     h1 {
       margin: 2px 0 0;
-      font-size: clamp(1.45rem, 3vw, 2.35rem);
+      font-size: clamp(1.4rem, 3vw, 2.15rem);
       letter-spacing: -0.055em;
       line-height: 1.1;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
     .btn {
@@ -98,14 +88,20 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: 11px 15px;
       border-radius: 999px;
       font-weight: 950;
-      white-space: nowrap;
       transition: 0.18s ease;
+      white-space: nowrap;
     }
 
     .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--gx-orange);
+      color: #2b1b00;
+      box-shadow: 0 14px 28px rgba(246,168,0,0.22);
+    }
 
     .btn-blue {
       background: var(--gx-blue);
@@ -122,22 +118,23 @@
     .hero {
       position: relative;
       overflow: hidden;
-      border-radius: 34px;
       padding: 28px;
-      color: white;
+      min-height: 270px;
+      border-radius: 32px;
       background: linear-gradient(135deg, rgba(20,106,163,0.96), rgba(6,62,102,0.98));
+      color: white;
       box-shadow: var(--gx-shadow);
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      width: 480px;
-      height: 480px;
-      right: -190px;
-      top: -210px;
+      width: 460px;
+      height: 460px;
+      right: -185px;
+      top: -205px;
       border-radius: 999px;
-      border: 50px solid rgba(255,255,255,0.22);
+      border: 48px solid rgba(255,255,255,0.22);
       transform: rotate(-24deg);
     }
 
@@ -152,15 +149,11 @@
     .hero-inner {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 20px;
-      align-items: stretch;
     }
 
     .kicker {
       color: #ffd874;
-      font-weight: 1000;
+      font-weight: 950;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       font-size: 0.86rem;
@@ -169,7 +162,7 @@
 
     .hero h2 {
       margin: 0;
-      font-size: clamp(2.15rem, 7vw, 5.2rem);
+      font-size: clamp(2.1rem, 7vw, 5rem);
       letter-spacing: -0.075em;
       line-height: 0.94;
     }
@@ -181,102 +174,21 @@
       line-height: 1.7;
     }
 
-    .live-card {
-      position: relative;
-      display: grid;
-      align-content: center;
-      padding: 22px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      backdrop-filter: blur(12px);
-    }
-
-    .live-label {
-      width: fit-content;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--gx-orange);
-      color: #2b1b00;
-      font-size: 0.78rem;
-      font-weight: 1000;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .live-stage {
-      color: rgba(255,255,255,0.74);
-      font-size: 0.9rem;
-      font-weight: 950;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .live-match {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 14px;
-      align-items: center;
-      font-size: clamp(1.35rem, 3vw, 2.25rem);
-      line-height: 1.1;
-      font-weight: 1000;
-      letter-spacing: -0.045em;
-    }
-
-    .live-match .vs {
-      color: #ffd874;
-      font-size: 0.86rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .live-score {
-      margin-top: 15px;
-      color: #ffd874;
-      font-size: clamp(1.25rem, 3vw, 2rem);
-      font-weight: 1000;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .section {
-      margin-top: 34px;
-    }
-
-    .section-head {
+    .controls {
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
       gap: 18px;
-      align-items: end;
-      margin-bottom: 14px;
+      margin-top: 20px;
     }
 
-    .section-title {
-      margin: 0;
-      font-size: clamp(1.45rem, 3vw, 2.2rem);
-      letter-spacing: -0.05em;
-    }
-
-    .section-note {
-      margin: 6px 0 0;
-      color: var(--gx-muted);
-      line-height: 1.6;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .panel, .match-row, .rank-card {
+    .panel, .result-card {
       background: white;
       border: 1px solid var(--gx-line);
       border-radius: var(--radius);
@@ -287,405 +199,121 @@
       padding: 18px;
     }
 
-    .panel h3 {
-      margin: 0 0 14px;
-      color: var(--gx-blue-dark);
-      font-size: 1.22rem;
-      letter-spacing: -0.03em;
-    }
-
-    .bracket-event {
-      background: white;
-      border: 1px solid var(--gx-line);
-      border-radius: 28px;
-      padding: 18px;
-      box-shadow: var(--gx-shadow);
-      overflow-x: auto;
-    }
-
-    .bracket-event + .bracket-event {
-      margin-top: 18px;
-    }
-
-    .bracket-title {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .bracket-title h3 {
-      margin: 0;
-      color: var(--gx-blue-dark);
-      font-size: 1.25rem;
-      letter-spacing: -0.035em;
-    }
-
-    .bracket-format {
-      color: #2b1b00;
-      background: #fff3cf;
-      padding: 7px 10px;
-      border-radius: 999px;
+    label {
+      display: block;
+      color: var(--gx-blue);
       font-weight: 950;
-      font-size: 0.82rem;
-      white-space: nowrap;
-    }
-
-    .bracket-board {
-      min-width: 860px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(190px, 1fr));
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .bracket-board.three-rounds {
-      grid-template-columns: repeat(3, minmax(210px, 1fr));
-      min-width: 680px;
-    }
-
-    .round {
-      display: grid;
-      gap: 14px;
-      align-content: stretch;
-    }
-
-    .round-title {
-      color: var(--gx-blue);
-      font-size: 0.82rem;
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: 0.10em;
-      margin-bottom: 2px;
-    }
-
-
-    .round-title.final-round {
-      color: #2b1b00;
-      background: #fff3cf;
-      border: 1px solid rgba(246,168,0,0.42);
-      padding: 8px 10px;
-      border-radius: 999px;
-      width: fit-content;
-    }
-
-    .match-label {
-      color: var(--gx-blue);
-      font-size: 0.75rem;
-      font-weight: 1000;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      font-size: 0.8rem;
       margin-bottom: 8px;
     }
 
-    .bracket-match.bronze {
-      background: #fffdf7;
-      border-color: rgba(246,168,0,0.34);
-    }
-
-    .bracket-match {
-      position: relative;
-      display: grid;
-      align-content: center;
-      min-height: 98px;
-      padding: 12px;
-      border-radius: 16px;
-      background: #f8fbff;
-      border: 1px solid var(--gx-line);
-    }
-
-    .bracket-match::after {
-      content: "";
-      position: absolute;
-      right: -22px;
-      top: 50%;
-      width: 22px;
-      border-top: 2px solid rgba(20, 106, 163, 0.20);
-    }
-
-    .round:last-child .bracket-match::after {
-      display: none;
-    }
-
-    .bracket-match.win {
-      background: #fff6dc;
-      border-color: rgba(246,168,0,0.45);
-    }
-
-    .bracket-slot {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: center;
-      padding: 8px 9px;
-      border-radius: 11px;
-      background: white;
-      border: 1px solid rgba(220, 230, 241, 0.85);
-      font-weight: 900;
-      line-height: 1.3;
-    }
-
-    .bracket-slot + .bracket-slot {
-      margin-top: 7px;
-    }
-
-    .bracket-slot.winner {
-      color: #2b1b00;
-      background: #fff3cf;
-      border-color: rgba(246,168,0,0.38);
-    }
-
-    .slot-score {
-      color: var(--gx-orange);
-      font-weight: 1000;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-      margin-left: 8px;
-    }
-
-    .champion-card {
-      display: grid;
-      place-items: center;
-      min-height: 136px;
-      padding: 16px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #fff3cf, #ffffff);
-      border: 1px solid rgba(246,168,0,0.50);
-      text-align: center;
-    }
-
-    .champion-label {
-      color: var(--gx-blue);
-      font-size: 0.82rem;
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 8px;
-    }
-
-    .champion-name {
-      color: #2b1b00;
-      font-size: 1.25rem;
-      line-height: 1.35;
-      font-weight: 1000;
-    }
-
-    .empty {
-      color: var(--gx-muted);
-      font-weight: 750;
-    }
-
-    .match-row {
-      padding: 15px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .match-stage {
-      color: var(--gx-blue);
-      font-size: 0.82rem;
-      font-weight: 950;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
-
-    .match-names {
-      font-size: 1.08rem;
-      font-weight: 950;
-      line-height: 1.4;
-    }
-
-    .match-score {
-      color: var(--gx-orange);
-      font-size: 1.2rem;
-      font-weight: 1000;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
-
-    .rank-card {
-      padding: 16px;
-    }
-
-    table {
+    select {
       width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 14px;
-    }
-
-    th, td {
-      padding: 11px 10px;
-      text-align: left;
-      border-bottom: 1px solid var(--gx-line);
-      font-variant-numeric: tabular-nums;
-    }
-
-    th {
-      color: var(--gx-blue-dark);
-      background: #f2f7fc;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    tr:last-child td { border-bottom: 0; }
-
-    .rank-num {
-      color: var(--gx-orange);
-      font-weight: 1000;
-      width: 42px;
-    }
-
-    .result-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .result-item {
       padding: 12px 13px;
-      border-radius: 16px;
-      background: #f8fbff;
+      border-radius: 15px;
       border: 1px solid var(--gx-line);
-      line-height: 1.45;
+      color: var(--gx-ink);
+      background: #fbfdff;
+      outline: none;
       font-weight: 850;
     }
 
-    .result-item strong {
-      color: var(--gx-blue);
-    }
-
-    .footer {
-      margin-top: 38px;
+    .draw-stage {
+      display: grid;
+      place-items: center;
+      min-height: 340px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(246,168,0,0.20), transparent 35%),
+        linear-gradient(135deg, #ffffff, #f4f9ff);
+      border: 1px dashed rgba(20,106,163,0.34);
       text-align: center;
+    }
+
+    .draw-word {
+      min-height: 1.2em;
+      font-size: clamp(2.1rem, 6vw, 4.6rem);
+      line-height: 1;
+      font-weight: 1000;
+      letter-spacing: -0.08em;
+      color: var(--gx-blue-dark);
+      text-shadow: 0 10px 30px rgba(20,106,163,0.12);
+    }
+
+    .draw-sub {
+      margin-top: 12px;
       color: var(--gx-muted);
-      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    @media (max-width: 980px) {
-      .hero-inner, .grid-2, .grid-3 {
+    .results {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .result-card {
+      overflow: hidden;
+    }
+
+    .result-head {
+      padding: 12px 14px;
+      color: #2b1b00;
+      background: var(--gx-orange);
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .result-body {
+      padding: 14px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .slot {
+      padding: 12px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--gx-line);
+      background: #f8fbff;
+      font-weight: 900;
+      line-height: 1.42;
+    }
+
+    .notice {
+      margin-top: 16px;
+      padding: 13px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(20,106,163,0.14);
+      background: white;
+      color: var(--gx-muted);
+      line-height: 1.6;
+      box-shadow: 0 10px 24px rgba(15,45,75,0.06);
+    }
+
+    .notice strong {
+      color: var(--gx-blue-dark);
+    }
+
+    .saved {
+      color: #13895c;
+      font-weight: 950;
+    }
+
+    @media (max-width: 900px) {
+      .topbar, .layout, .results {
         grid-template-columns: 1fr;
       }
 
       .topbar {
         flex-direction: column;
         align-items: flex-start;
-      }
-
-      .top-actions {
-        justify-content: flex-start;
-      }
-
-      .bracket-board,
-      .bracket-board.three-rounds {
-        min-width: 720px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .app { width: min(100% - 18px, 1380px); }
-      .topbar {
-        align-items: flex-start;
-      }
-      .hero { padding: 20px; border-radius: 26px; }
-      .hero h2 { font-size: clamp(2rem, 14vw, 3.4rem); }
-      .hero p { font-size: 0.94rem; }
-      .live-match { grid-template-columns: 1fr; font-size: 1.35rem; gap: 8px; }
-      .live-match .vs { text-align: left; }
-      .live-card { padding: 17px; }
-      .logo-wrap {
-        align-items: flex-start;
-      }
-      .logo-wrap img { width: 102px; height: 52px; }
-      h1 { font-size: 1.26rem; }
-      .school { font-size: 0.72rem; white-space: normal; }
-      .match-row { grid-template-columns: 1fr; }
-
-      .bracket-event {
-        padding: 12px;
-        border-radius: 22px;
-        overflow-x: visible;
-      }
-      .bracket-title {
-        align-items: flex-start;
-        flex-direction: column;
-        margin-bottom: 12px;
-      }
-      .bracket-title h3 {
-        font-size: 1.1rem;
-      }
-      .bracket-format {
-        white-space: normal;
-        line-height: 1.35;
-      }
-
-      .bracket-board,
-      .bracket-board.three-rounds {
-        min-width: 0;
-        grid-template-columns: 1fr;
-        gap: 13px;
-      }
-
-      .round {
-        gap: 10px;
-        padding: 12px;
-        border: 1px solid var(--gx-line);
-        border-radius: 18px;
-        background: #f8fbff;
-      }
-
-      .round-title {
-        display: inline-flex;
-        width: fit-content;
-        padding: 7px 10px;
-        border-radius: 999px;
-        background: #edf6ff;
-        border: 1px solid rgba(20,106,163,0.16);
-        margin-bottom: 2px;
-      }
-
-      .round-title.final-round {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        align-self: start;
-        justify-self: start;
-        width: fit-content;
-        height: auto;
-        min-height: 0;
-        line-height: 1.1;
-        white-space: normal;
-      }
-
-      .bracket-match {
-        min-height: 0;
-        padding: 10px;
-        background: white;
-      }
-      .bracket-match::after {
-        display: none;
-      }
-      .bracket-slot {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.95rem;
-        padding: 9px;
-      }
-      .match-label {
-        font-size: 0.72rem;
-        margin-bottom: 7px;
-      }
-      .champion-card {
-        min-height: 96px;
-      }
-      .champion-name {
-        font-size: 1.08rem;
       }
     }
   </style>
@@ -694,509 +322,182 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="logo-wrap" href="viewer.html">
+      <a class="logo-wrap" href="index.html">
         <img src="assets/gxicc-logo.png" alt="GXICC Logo" />
         <div>
           <div class="school">Xi'an Gaoxin No.1 High School ICC</div>
           <h1>GXICC国三年级羽毛球联赛</h1>
         </div>
       </a>
-
-      <div class="top-actions">
-        <button class="btn btn-blue" onclick="loadAndRender()">↻ Refresh</button>
-      </div>
+      <a class="btn btn-soft" href="index.html">← Back to Scoreboard</a>
     </header>
 
     <section class="hero">
       <div class="hero-inner">
-        <div>
-          <div class="kicker">Audience View</div>
-          <h2>Live Tournament Board</h2>
-          <p>实时查看当前比赛、淘汰赛晋级情况、小组排名与已完成赛果。页面会自动刷新，具体开赛时间请以现场安排为准。</p>
-        </div>
-
-        <div class="live-card" id="currentMatchCard"></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Knockout Brackets</h2>
-          <p class="section-note">查看各项目晋级路线、冠军战与季军战。胜者会在比分更新后进入下一轮。</p>
-        </div>
-      </div>
-      <div id="brackets"></div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Men's Singles Rankings</h2>
-          <p class="section-note">男单小组赛自动排名：胜场、净胜分、总得分。</p>
-        </div>
-      </div>
-      <div class="grid-2" id="rankings"></div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Results & Up Next</h2>
-          <p class="section-note">左侧为已完成比赛，右侧为接下来可以进行的比赛。</p>
-        </div>
-      </div>
-      <div class="grid-2">
-        <div class="panel">
-          <h3>Finished Matches</h3>
-          <div class="result-list" id="finishedList"></div>
-        </div>
-        <div class="panel">
-          <h3>Up Next</h3>
-          <div class="result-list" id="nextList"></div>
+        <div class="kicker">Official Draw Ceremony</div>
+        <h2>Draw Reveal</h2>
+        <p>点击 Begin Draw 播放抽签动画。结果为预设签表，用于保证比赛观赏性与时间安排。点击 Save Official Draw 后，主页面可以通过 Refresh Draw 读取正式名单。</p>
+        <div class="controls">
+          <button class="btn btn-primary" onclick="beginDraw()">Begin Draw</button>
+          <button class="btn btn-blue" onclick="revealAll()">Reveal All</button>
+          <button class="btn btn-soft" onclick="saveOfficialDraw()">Save Official Draw</button>
+          <button class="btn btn-soft" onclick="resetOfficialDraw()">Reset Draw</button>
+          <a class="btn btn-soft" href="index.html">Return</a>
         </div>
       </div>
     </section>
 
-    <footer class="footer">
-      GXICC国三年级羽毛球联赛 · Audience View · Auto-refresh every 3 seconds
-    </footer>
+    <section class="layout">
+      <div class="panel">
+        <label for="eventSelect">Select Event</label>
+        <select id="eventSelect" onchange="setEvent(this.value)">
+          <option value="mixed">Mixed Doubles 混双</option>
+          <option value="mens">Men's Singles 男单</option>
+          <option value="womens">Women's Singles 女单</option>
+        </select>
+
+        <div class="notice" id="notice">
+          <strong>Ready:</strong> 选择项目后点击 Begin Draw。保存后请回到主页面刷新抽签。
+        </div>
+      </div>
+
+      <div>
+        <div class="draw-stage">
+          <div>
+            <div id="drawWord" class="draw-word">Ready</div>
+            <div id="drawSub" class="draw-sub">Mixed Doubles · Knockout Bracket</div>
+          </div>
+        </div>
+        <div id="results" class="results"></div>
+      </div>
+    </section>
   </main>
 
   <script>
     const DRAW_KEY = "gxicc_badminton_draw_v2";
-    const SCORES_KEY = "gxicc_badminton_scores_v2";
-    const CURRENT_KEY = "gxicc_badminton_current_match_v2";
 
-    const defaultDraw = {
+    const officialDraw = {
       mens: {
-        groupA: ["TBD", "TBD", "TBD"],
-        groupB: ["TBD", "TBD", "TBD"]
+        groupA: ["林大庸", "朱宸诺", "杜泊儒"],
+        groupB: ["王子墨", "王子一", "严钰淼"]
       },
       womens: {
-        sf1: ["TBD", "TBD"],
-        sf2: ["TBD", "TBD"]
+        sf1: ["伍雯婕", "张馨文"],
+        sf2: ["张舒渊", "梅兰"]
       },
       mixed: {
-        qf1: ["TBD", "TBD"],
-        qf2: ["TBD", "TBD"],
-        qf3: ["TBD", "TBD"],
-        qf4: ["TBD", "TBD"]
+        qf1: ["梅兰 / 杜泊儒", "薛钰涵 / 刘佳康"],
+        qf2: ["林大庸 / 谷佳桦", "张舒渊 / 朱宸诺"],
+        qf3: ["张馨文 / 王子一", "赵毅康 / 祁奕欣"],
+        qf4: ["李林泽 / 段嘉淇", "伍雯婕 / 刘昊轩"]
       }
     };
 
-    let draw = JSON.parse(JSON.stringify(defaultDraw));
-    let scores = {};
-
-    function loadJSON(key, fallback) {
-      try {
-        return JSON.parse(localStorage.getItem(key)) ?? fallback;
-      } catch {
-        return fallback;
+    const eventConfig = {
+      mixed: {
+        title: "Mixed Doubles · Knockout Bracket",
+        names: [
+          "梅兰 / 杜泊儒", "薛钰涵 / 刘佳康",
+          "林大庸 / 谷佳桦", "张舒渊 / 朱宸诺",
+          "张馨文 / 王子一", "赵毅康 / 祁奕欣",
+          "李林泽 / 段嘉淇", "伍雯婕 / 刘昊轩"
+        ],
+        sections: {
+          "Upper Half": [
+            "QF1：梅兰 / 杜泊儒 vs 薛钰涵 / 刘佳康",
+            "QF2：林大庸 / 谷佳桦 vs 张舒渊 / 朱宸诺"
+          ],
+          "Lower Half": [
+            "QF3：张馨文 / 王子一 vs 赵毅康 / 祁奕欣",
+            "QF4：李林泽 / 段嘉淇 vs 伍雯婕 / 刘昊轩"
+          ]
+        }
+      },
+      mens: {
+        title: "Men's Singles · Group Stage",
+        names: ["林大庸", "王子墨", "王子一", "朱宸诺", "严钰淼", "杜泊儒"],
+        sections: {
+          "Group A": ["林大庸", "朱宸诺", "杜泊儒"],
+          "Group B": ["王子墨", "王子一", "严钰淼"]
+        }
+      },
+      womens: {
+        title: "Women's Singles · Semifinals",
+        names: ["伍雯婕", "张舒渊", "梅兰", "张馨文"],
+        sections: {
+          "Semifinal 1": ["伍雯婕 vs 张馨文"],
+          "Semifinal 2": ["张舒渊 vs 梅兰"]
+        }
       }
-    }
-
-    const matchDefs = {
-      mixed_qf1: { stage: "Mixed QF1", format: "15-point BO1", type: "bo1", slots: () => draw.mixed.qf1 },
-      mixed_qf2: { stage: "Mixed QF2", format: "15-point BO1", type: "bo1", slots: () => draw.mixed.qf2 },
-      mixed_qf3: { stage: "Mixed QF3", format: "15-point BO1", type: "bo1", slots: () => draw.mixed.qf3 },
-      mixed_qf4: { stage: "Mixed QF4", format: "15-point BO1", type: "bo1", slots: () => draw.mixed.qf4 },
-      womens_sf1: { stage: "Women's SF1", format: "15-point BO1", type: "bo1", slots: () => draw.womens.sf1 },
-      mixed_sf1: { stage: "Mixed SF1", format: "15-point BO1", type: "bo1", slots: () => [winner("mixed_qf1") || "Winner QF1", winner("mixed_qf2") || "Winner QF2"] },
-      womens_sf2: { stage: "Women's SF2", format: "15-point BO1", type: "bo1", slots: () => draw.womens.sf2 },
-      mixed_sf2: { stage: "Mixed SF2", format: "15-point BO1", type: "bo1", slots: () => [winner("mixed_qf3") || "Winner QF3", winner("mixed_qf4") || "Winner QF4"] },
-      mixed_bronze: { stage: "Mixed Bronze", format: "15-point BO1", type: "bo1", slots: () => [loser("mixed_sf1") || "Loser SF1", loser("mixed_sf2") || "Loser SF2"] },
-      mixed_final: { stage: "Mixed Final", format: "15-point BO3", type: "bo3", slots: () => [winner("mixed_sf1") || "Winner SF1", winner("mixed_sf2") || "Winner SF2"] },
-
-      mens_ga1: { stage: "Men's Group A M1", format: "11-point BO1", type: "bo1", group: "A", slots: () => [draw.mens.groupA[0], draw.mens.groupA[1]] },
-      mens_gb1: { stage: "Men's Group B M1", format: "11-point BO1", type: "bo1", group: "B", slots: () => [draw.mens.groupB[0], draw.mens.groupB[1]] },
-      mens_ga2: { stage: "Men's Group A M2", format: "11-point BO1", type: "bo1", group: "A", slots: () => [draw.mens.groupA[0], draw.mens.groupA[2]] },
-      mens_gb2: { stage: "Men's Group B M2", format: "11-point BO1", type: "bo1", group: "B", slots: () => [draw.mens.groupB[0], draw.mens.groupB[2]] },
-      womens_bronze: { stage: "Women's Bronze", format: "15-point BO1", type: "bo1", slots: () => [loser("womens_sf1") || "Loser SF1", loser("womens_sf2") || "Loser SF2"] },
-      mens_ga3: { stage: "Men's Group A M3", format: "11-point BO1", type: "bo1", group: "A", slots: () => [draw.mens.groupA[1], draw.mens.groupA[2]] },
-      mens_gb3: { stage: "Men's Group B M3", format: "11-point BO1", type: "bo1", group: "B", slots: () => [draw.mens.groupB[1], draw.mens.groupB[2]] },
-      mens_sf1: { stage: "Men's SF1", format: "15-point BO1", type: "bo1", slots: () => {
-        const A = groupRanking("A");
-        const B = groupRanking("B");
-        return [mensGroupComplete("A") ? A[0].name : "Group A #1", mensGroupComplete("B") ? B[1].name : "Group B #2"];
-      }},
-      mens_sf2: { stage: "Men's SF2", format: "15-point BO1", type: "bo1", slots: () => {
-        const A = groupRanking("A");
-        const B = groupRanking("B");
-        return [mensGroupComplete("B") ? B[0].name : "Group B #1", mensGroupComplete("A") ? A[1].name : "Group A #2"];
-      }},
-      mens_bronze: { stage: "Men's Bronze", format: "15-point BO1", type: "bo1", slots: () => [loser("mens_sf1") || "Loser SF1", loser("mens_sf2") || "Loser SF2"] },
-      womens_final: { stage: "Women's Final", format: "15-point BO1", type: "bo1", slots: () => [winner("womens_sf1") || "Winner SF1", winner("womens_sf2") || "Winner SF2"] },
-      mens_final: { stage: "Men's Final", format: "15-point BO3", type: "bo3", slots: () => [winner("mens_sf1") || "Winner SF1", winner("mens_sf2") || "Winner SF2"] }
     };
 
-    const matchOrder = [
-      "mixed_qf1", "mixed_qf2", "mixed_qf3", "mixed_qf4", "womens_sf1", "mixed_sf1", "womens_sf2", "mixed_sf2", "mixed_bronze", "mixed_final",
-      "mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "mens_bronze", "womens_final", "mens_final"
-    ];
+    let selected = "mixed";
+    let timer = null;
 
-    function scoreOf(id) {
-      return scores[id] || {};
+    function setEvent(key) {
+      selected = key;
+      document.getElementById("drawWord").textContent = "Ready";
+      document.getElementById("drawSub").textContent = eventConfig[key].title;
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("notice").innerHTML = `<strong>Selected:</strong> ${eventConfig[key].title}`;
     }
 
-    function isFiniteNumber(value) {
-      return value !== "" && value !== null && value !== undefined && Number.isFinite(Number(value));
-    }
+    function beginDraw() {
+      const config = eventConfig[selected];
+      const word = document.getElementById("drawWord");
+      const sub = document.getElementById("drawSub");
+      const results = document.getElementById("results");
+      let count = 0;
 
-    function isPlaceholder(name) {
-      return !name || name.includes("TBD") || name.includes("Winner") || name.includes("Loser") || name.includes("Group");
-    }
+      results.innerHTML = "";
+      sub.textContent = "Drawing...";
+      clearInterval(timer);
 
-    function completedBO1(id) {
-      const s = scoreOf(id);
-      return isFiniteNumber(s.a) && isFiniteNumber(s.b) && Number(s.a) !== Number(s.b);
-    }
-
-    function winner(id) {
-      const def = matchDefs[id];
-      if (!def) return null;
-      const [a, b] = def.slots();
-
-      if (def.type === "bo1") {
-        const s = scoreOf(id);
-        if (!completedBO1(id)) return null;
-        return Number(s.a) > Number(s.b) ? a : b;
-      }
-
-      const sets = scoreOf(id).sets || [];
-      let winsA = 0;
-      let winsB = 0;
-      sets.forEach(set => {
-        if (isFiniteNumber(set.a) && isFiniteNumber(set.b) && Number(set.a) !== Number(set.b)) {
-          Number(set.a) > Number(set.b) ? winsA++ : winsB++;
+      timer = setInterval(() => {
+        word.textContent = config.names[Math.floor(Math.random() * config.names.length)];
+        count++;
+        if (count > 32) {
+          clearInterval(timer);
+          word.textContent = "Locked In";
+          sub.textContent = config.title;
+          renderResults(config);
         }
-      });
-      if (winsA >= 2) return a;
-      if (winsB >= 2) return b;
-      return null;
+      }, 72);
     }
 
-    function loser(id) {
-      const def = matchDefs[id];
-      if (!def) return null;
-      const [a, b] = def.slots();
-      const w = winner(id);
-      if (!w) return null;
-      return w === a ? b : a;
-    }
-
-    function isPlayable(id) {
-      const [a, b] = matchDefs[id].slots();
-      return !isPlaceholder(a) && !isPlaceholder(b);
-    }
-
-    function isFinished(id) {
-      return !!winner(id);
-    }
-
-    function firstPlayableUnfinished() {
-      return matchOrder.find(id => isPlayable(id) && !isFinished(id)) || "";
-    }
-
-    function scoreText(id) {
-      const def = matchDefs[id];
-      const s = scoreOf(id);
-
-      if (def.type === "bo1") {
-        if (!isFiniteNumber(s.a) || !isFiniteNumber(s.b)) return "—";
-        return `${s.a} - ${s.b}`;
-      }
-
-      const sets = s.sets || [];
-      const lines = sets
-        .filter(set => isFiniteNumber(set.a) || isFiniteNumber(set.b))
-        .map((set, i) => `S${i + 1}: ${set.a || 0}-${set.b || 0}`);
-      return lines.length ? lines.join(" · ") : "—";
-    }
-
-    function groupMatches(group) {
-      return group === "A" ? ["mens_ga1", "mens_ga2", "mens_ga3"] : ["mens_gb1", "mens_gb2", "mens_gb3"];
-    }
-
-    function mensGroupComplete(group) {
-      return groupMatches(group).every(id => !!winner(id));
-    }
-
-    function groupRanking(group) {
-      const names = group === "A" ? draw.mens.groupA : draw.mens.groupB;
-      const table = {};
-      names.forEach(name => {
-        table[name] = { name, w: 0, l: 0, pf: 0, pa: 0, diff: 0 };
-      });
-
-      groupMatches(group).forEach(id => {
-        const [a, b] = matchDefs[id].slots();
-        const s = scoreOf(id);
-        if (!table[a] || !table[b]) return;
-        if (!completedBO1(id)) return;
-
-        const sa = Number(s.a);
-        const sb = Number(s.b);
-
-        table[a].pf += sa;
-        table[a].pa += sb;
-        table[b].pf += sb;
-        table[b].pa += sa;
-
-        if (sa > sb) {
-          table[a].w++;
-          table[b].l++;
-        } else {
-          table[b].w++;
-          table[a].l++;
-        }
-      });
-
-      Object.values(table).forEach(row => {
-        row.diff = row.pf - row.pa;
-      });
-
-      return Object.values(table).sort((x, y) =>
-        y.w - x.w ||
-        y.diff - x.diff ||
-        y.pf - x.pf ||
-        x.name.localeCompare(y.name, "zh-Hans-CN")
-      );
-    }
-
-    function renderCurrentMatch() {
-      const storedCurrent = localStorage.getItem(CURRENT_KEY) || "";
-      const currentId = storedCurrent && matchDefs[storedCurrent] ? storedCurrent : firstPlayableUnfinished();
-      const box = document.getElementById("currentMatchCard");
-
-      if (!currentId) {
-        box.innerHTML = `
-          <div class="live-label">Standby</div>
-          <div class="live-stage">No playable match yet</div>
-          <div class="live-match">
-            <span>Waiting for draw</span>
-          </div>
-          <div class="live-score">Please refresh after draw is saved.</div>
-        `;
-        return;
-      }
-
-      const def = matchDefs[currentId];
-      const [a, b] = def.slots();
-      const status = isFinished(currentId) ? "Recently Finished" : "Current Match";
-      const w = winner(currentId);
-
-      box.innerHTML = `
-        <div class="live-label">${status}</div>
-        <div class="live-stage">${def.stage} · ${def.format}</div>
-        <div class="live-match">
-          <span>${a}</span>
-          <span class="vs">vs</span>
-          <span>${b}</span>
-        </div>
-        <div class="live-score">${scoreText(currentId)}${w ? ` · Winner: ${w}` : ""}</div>
-      `;
-    }
-
-    function bracketSlot(name, id, side) {
-      const w = winner(id);
-      const s = scoreOf(id);
-      let slotScore = "";
-      if (matchDefs[id]?.type === "bo1") {
-        slotScore = side === "a" && isFiniteNumber(s.a) ? s.a : side === "b" && isFiniteNumber(s.b) ? s.b : "";
-      }
-      const isWinner = w && name === w;
-      return `
-        <div class="bracket-slot ${isWinner ? "winner" : ""}">
-          <span>${name}</span>
-          <span class="slot-score">${slotScore}</span>
-        </div>
-      `;
-    }
-
-    function bracketMatch(id, customLabel = "") {
-      const def = matchDefs[id];
-      const [a, b] = def.slots();
-      const label = customLabel || def.stage;
-      const bronzeClass = id.includes("bronze") ? "bronze" : "";
-      return `
-        <div class="bracket-match ${winner(id) ? "win" : ""} ${bronzeClass}">
-          <div class="match-label">${label}</div>
-          ${bracketSlot(a, id, "a")}
-          ${bracketSlot(b, id, "b")}
-        </div>
-      `;
-    }
-
-    function championCard(label, name) {
-      return `
-        <div class="champion-card">
-          <div>
-            <div class="champion-label">${label}</div>
-            <div class="champion-name">${name || "TBD"}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderBrackets() {
-      document.getElementById("brackets").innerHTML = `
-        <article class="bracket-event">
-          <div class="bracket-title">
-            <h3>Mixed Doubles 混双</h3>
-            <div class="bracket-format">QF/SF/Bronze: 15 BO1 · Final: 15 BO3</div>
-          </div>
-          <div class="bracket-board">
-            <div class="round">
-              <div class="round-title">Quarterfinals</div>
-              ${bracketMatch("mixed_qf1")}
-              ${bracketMatch("mixed_qf2")}
-              ${bracketMatch("mixed_qf3")}
-              ${bracketMatch("mixed_qf4")}
-            </div>
-            <div class="round">
-              <div class="round-title">Semifinals</div>
-              ${bracketMatch("mixed_sf1")}
-              ${bracketMatch("mixed_sf2")}
-            </div>
-            <div class="round">
-              <div class="round-title final-round">Final / Bronze</div>
-              ${bracketMatch("mixed_final", "Championship Final")}
-              ${bracketMatch("mixed_bronze", "Third-place Match")}
-            </div>
-            <div class="round">
-              <div class="round-title">Champion</div>
-              ${championCard("Mixed Doubles Champion", winner("mixed_final"))}
-            </div>
+    function renderResults(config) {
+      const results = document.getElementById("results");
+      results.innerHTML = Object.entries(config.sections).map(([title, lines]) => `
+        <article class="result-card">
+          <div class="result-head">${title}</div>
+          <div class="result-body">
+            ${lines.map(line => `<div class="slot">${line}</div>`).join("")}
           </div>
         </article>
-
-        <article class="bracket-event">
-          <div class="bracket-title">
-            <h3>Men's Singles 男单</h3>
-            <div class="bracket-format">Groups → SF/Bronze: 15 BO1 · Final: 15 BO3</div>
-          </div>
-          <div class="bracket-board three-rounds">
-            <div class="round">
-              <div class="round-title">Semifinals</div>
-              ${bracketMatch("mens_sf1")}
-              ${bracketMatch("mens_sf2")}
-            </div>
-            <div class="round">
-              <div class="round-title final-round">Final / Bronze</div>
-              ${bracketMatch("mens_final", "Championship Final")}
-              ${bracketMatch("mens_bronze", "Third-place Match")}
-            </div>
-            <div class="round">
-              <div class="round-title">Champion</div>
-              ${championCard("Men's Singles Champion", winner("mens_final"))}
-            </div>
-          </div>
-        </article>
-
-        <article class="bracket-event">
-          <div class="bracket-title">
-            <h3>Women's Singles 女单</h3>
-            <div class="bracket-format">SF/Final/Bronze: 15 BO1</div>
-          </div>
-          <div class="bracket-board three-rounds">
-            <div class="round">
-              <div class="round-title">Semifinals</div>
-              ${bracketMatch("womens_sf1")}
-              ${bracketMatch("womens_sf2")}
-            </div>
-            <div class="round">
-              <div class="round-title final-round">Final / Bronze</div>
-              ${bracketMatch("womens_final", "Championship Final")}
-              ${bracketMatch("womens_bronze", "Third-place Match")}
-            </div>
-            <div class="round">
-              <div class="round-title">Champion</div>
-              ${championCard("Women's Singles Champion", winner("womens_final"))}
-            </div>
-          </div>
-        </article>
-      `;
+      `).join("");
     }
 
-    function renderRankingCard(group) {
-      const rows = groupRanking(group);
-      return `
-        <article class="rank-card">
-          <h3>Men's Group ${group}</h3>
-          <table>
-            <thead>
-              <tr><th>#</th><th>Player</th><th>W</th><th>L</th><th>PF</th><th>PA</th><th>+/-</th></tr>
-            </thead>
-            <tbody>
-              ${rows.map((row, idx) => `
-                <tr>
-                  <td class="rank-num">${idx + 1}</td>
-                  <td>${row.name}</td>
-                  <td>${row.w}</td>
-                  <td>${row.l}</td>
-                  <td>${row.pf}</td>
-                  <td>${row.pa}</td>
-                  <td>${row.diff}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </article>
-      `;
+    function revealAll() {
+      clearInterval(timer);
+      const config = eventConfig[selected];
+      document.getElementById("drawWord").textContent = "Locked In";
+      document.getElementById("drawSub").textContent = config.title;
+      renderResults(config);
     }
 
-    function renderRankings() {
-      document.getElementById("rankings").innerHTML = renderRankingCard("A") + renderRankingCard("B");
+    function resetOfficialDraw() {
+      const ok = confirm("Reset saved draw? 这会清除已保存的抽签结果。主页面刷新后会回到 TBD。");
+      if (!ok) return;
+      localStorage.removeItem(DRAW_KEY);
+      document.getElementById("notice").innerHTML = `<strong>Reset:</strong> Saved draw has been removed. Return to scoreboard and click Refresh Draw.`;
     }
 
-    function matchRow(id) {
-      const def = matchDefs[id];
-      const [a, b] = def.slots();
-      return `
-        <div class="match-row">
-          <div>
-            <div class="match-stage">${def.stage} · ${def.format}</div>
-            <div class="match-names">${a} <span class="empty">vs</span> ${b}</div>
-          </div>
-          <div class="match-score">${scoreText(id)}</div>
-        </div>
-      `;
+    function saveOfficialDraw() {
+      localStorage.setItem(DRAW_KEY, JSON.stringify(officialDraw));
+      document.getElementById("notice").innerHTML = `<strong class="saved">Saved:</strong> Official draw has been saved. Return to scoreboard and click Refresh Draw.`;
     }
 
-    function renderLists() {
-      const finished = matchOrder.filter(id => isFinished(id));
-      const next = matchOrder.filter(id => isPlayable(id) && !isFinished(id)).slice(0, 6);
-
-      document.getElementById("finishedList").innerHTML = finished.length
-        ? finished.slice(-10).reverse().map(id => {
-            const w = winner(id);
-            return `
-              <div class="result-item">
-                <strong>${matchDefs[id].stage}</strong><br>
-                ${matchDefs[id].slots()[0]} vs ${matchDefs[id].slots()[1]}<br>
-                <span class="empty">${scoreText(id)} · Winner: ${w}</span>
-              </div>
-            `;
-          }).join("")
-        : `<div class="result-item empty">No finished matches yet.</div>`;
-
-      document.getElementById("nextList").innerHTML = next.length
-        ? next.map(matchRow).join("")
-        : `<div class="result-item empty">No upcoming playable matches yet.</div>`;
-    }
-
-    function loadAndRender() {
-      draw = loadJSON(DRAW_KEY, JSON.parse(JSON.stringify(defaultDraw)));
-      scores = loadJSON(SCORES_KEY, {});
-      renderCurrentMatch();
-      renderBrackets();
-      renderRankings();
-      renderLists();
-    }
-
-    loadAndRender();
-    setInterval(loadAndRender, 3000);
+    setEvent("mixed");
   </script>
 </body>
 </html>

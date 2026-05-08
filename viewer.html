@@ -360,6 +360,30 @@
       margin-bottom: 2px;
     }
 
+
+    .round-title.final-round {
+      color: #2b1b00;
+      background: #fff3cf;
+      border: 1px solid rgba(246,168,0,0.42);
+      padding: 8px 10px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .match-label {
+      color: var(--gx-blue);
+      font-size: 0.75rem;
+      font-weight: 1000;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .bracket-match.bronze {
+      background: #fffdf7;
+      border-color: rgba(246,168,0,0.34);
+    }
+
     .bracket-match {
       position: relative;
       display: grid;
@@ -564,12 +588,34 @@
 
     @media (max-width: 640px) {
       .app { width: min(100% - 20px, 1380px); }
-      .hero { padding: 22px; }
-      .live-match { grid-template-columns: 1fr; }
+      .hero { padding: 20px; }
+      .hero h2 { font-size: clamp(2rem, 14vw, 3.4rem); }
+      .hero p { font-size: 0.94rem; }
+      .live-match { grid-template-columns: 1fr; font-size: 1.35rem; }
       .live-match .vs { text-align: left; }
+      .live-card { padding: 17px; }
       .logo-wrap img { width: 102px; height: 52px; }
       .match-row { grid-template-columns: 1fr; }
-      .bracket-event { padding: 14px; }
+      .bracket-event { padding: 14px; overflow-x: visible; }
+      .bracket-board,
+      .bracket-board.three-rounds {
+        min-width: 0;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .round {
+        gap: 10px;
+      }
+      .bracket-match {
+        min-height: 0;
+      }
+      .bracket-match::after {
+        display: none;
+      }
+      .bracket-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -587,7 +633,6 @@
 
       <div class="top-actions">
         <button class="btn btn-blue" onclick="loadAndRender()">↻ Refresh</button>
-       
       </div>
     </header>
 
@@ -596,7 +641,7 @@
         <div>
           <div class="kicker">Audience View</div>
           <h2>Live Tournament Board</h2>
-          <p>展示当前比赛、淘汰赛树、小组排名和已完成比赛结果。这个页面适合投屏或给观众打开；比分与晋级信息来自主控制台。</p>
+          <p>实时查看当前比赛、淘汰赛晋级情况、小组排名与已完成赛果。页面会自动刷新，具体开赛时间请以现场安排为准。</p>
         </div>
 
         <div class="live-card" id="currentMatchCard"></div>
@@ -607,7 +652,7 @@
       <div class="section-head">
         <div>
           <h2 class="section-title">Knockout Brackets</h2>
-          <p class="section-note">淘汰赛采用树状结构展示，胜者会自动进入下一轮。</p>
+          <p class="section-note">查看各项目晋级路线、冠军战与季军战。胜者会在比分更新后进入下一轮。</p>
         </div>
       </div>
       <div id="brackets"></div>
@@ -708,13 +753,14 @@
         const B = groupRanking("B");
         return [mensGroupComplete("B") ? B[0].name : "Group B #1", mensGroupComplete("A") ? A[1].name : "Group A #2"];
       }},
+      mens_bronze: { stage: "Men's Bronze", format: "15-point BO1", type: "bo1", slots: () => [loser("mens_sf1") || "Loser SF1", loser("mens_sf2") || "Loser SF2"] },
       womens_final: { stage: "Women's Final", format: "15-point BO1", type: "bo1", slots: () => [winner("womens_sf1") || "Winner SF1", winner("womens_sf2") || "Winner SF2"] },
       mens_final: { stage: "Men's Final", format: "15-point BO3", type: "bo3", slots: () => [winner("mens_sf1") || "Winner SF1", winner("mens_sf2") || "Winner SF2"] }
     };
 
     const matchOrder = [
       "mixed_qf1", "mixed_qf2", "mixed_qf3", "mixed_qf4", "womens_sf1", "mixed_sf1", "womens_sf2", "mixed_sf2", "mixed_final",
-      "mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "womens_final", "mens_final"
+      "mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "mens_bronze", "womens_final", "mens_final"
     ];
 
     function scoreOf(id) {
@@ -896,11 +942,14 @@
       `;
     }
 
-    function bracketMatch(id) {
+    function bracketMatch(id, customLabel = "") {
       const def = matchDefs[id];
       const [a, b] = def.slots();
+      const label = customLabel || def.stage;
+      const bronzeClass = id.includes("bronze") ? "bronze" : "";
       return `
-        <div class="bracket-match ${winner(id) ? "win" : ""}">
+        <div class="bracket-match ${winner(id) ? "win" : ""} ${bronzeClass}">
+          <div class="match-label">${label}</div>
           ${bracketSlot(a, id, "a")}
           ${bracketSlot(b, id, "b")}
         </div>
@@ -939,8 +988,8 @@
               ${bracketMatch("mixed_sf2")}
             </div>
             <div class="round">
-              <div class="round-title">Final</div>
-              ${bracketMatch("mixed_final")}
+              <div class="round-title final-round">Championship Final</div>
+              ${bracketMatch("mixed_final", "Mixed Doubles Final")}
             </div>
             <div class="round">
               <div class="round-title">Champion</div>
@@ -952,7 +1001,7 @@
         <article class="bracket-event">
           <div class="bracket-title">
             <h3>Men's Singles 男单</h3>
-            <div class="bracket-format">Groups → SF: 15 BO1 · Final: 15 BO3</div>
+            <div class="bracket-format">Groups → SF/Bronze: 15 BO1 · Final: 15 BO3</div>
           </div>
           <div class="bracket-board three-rounds">
             <div class="round">
@@ -961,8 +1010,9 @@
               ${bracketMatch("mens_sf2")}
             </div>
             <div class="round">
-              <div class="round-title">Final</div>
-              ${bracketMatch("mens_final")}
+              <div class="round-title final-round">Final / Bronze</div>
+              ${bracketMatch("mens_final", "Championship Final")}
+              ${bracketMatch("mens_bronze", "Third-place Match")}
             </div>
             <div class="round">
               <div class="round-title">Champion</div>
@@ -983,9 +1033,9 @@
               ${bracketMatch("womens_sf2")}
             </div>
             <div class="round">
-              <div class="round-title">Final / Bronze</div>
-              ${bracketMatch("womens_final")}
-              ${bracketMatch("womens_bronze")}
+              <div class="round-title final-round">Final / Bronze</div>
+              ${bracketMatch("womens_final", "Championship Final")}
+              ${bracketMatch("womens_bronze", "Third-place Match")}
             </div>
             <div class="round">
               <div class="round-title">Champion</div>

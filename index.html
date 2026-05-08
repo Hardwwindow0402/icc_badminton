@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GXICC国三年级羽毛球联赛 · Scoreboard</title>
+  <style>
+    :root {
+      --gx-orange: #f6a800;
+      --gx-blue: #146aa3;
+      --gx-blue-dark: #063e66;
+      --gx-ink: #0b1b2b;
+      --gx-muted: #667085;
+      --gx-bg: #f4f7fb;
+      --gx-card: #ffffff;
+      --gx-line: #dce6f1;
+      --gx-green: #13a66f;
+      --gx-red: #dc4a3d;
+      --gx-shadow: 0 18px 44px rgba(15, 45, 75, 0.12);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--gx-ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(246, 168, 0, 0.18), transparent 34%),
+        radial-gradient(circle at 88% 6%, rgba(20, 106, 163, 0.20), transparent 32%),
+        linear-gradient(180deg, #f8fbff 0%, var(--gx-bg) 52%, #edf4fb 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 64px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 14px 0 16px;
+      backdrop-filter: blur(18px);
+    }
+
+    .logo-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .logo-card img {
+      height: 58px;
+      width: 118px;
+      object-fit: contain;
+      background: white;
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: var(--gx-shadow);
+      border: 1px solid rgba(20,106,163,0.12);
+    }
+
+    .title-wrap {
+      min-width: 0;
+    }
+
+    .school {
+      color: var(--gx-blue);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    h1 {
+      margin: 2px 0 0;
+      font-size: clamp(1.35rem, 3vw, 2.2rem);
+      letter-spacing: -0.055em;
+      line-height: 1.1;
+    }
+
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      transition: 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .btn-primary {
+      background: var(--gx-orange);
+      color: #2b1b00;
+      box-shadow: 0 14px 28px rgba(246, 168, 0, 0.22);
+    }
+
+    .btn-blue {
+      background: var(--gx-blue);
+      color: white;
+      box-shadow: 0 14px 28px rgba(20, 106, 163, 0.18);
+    }
+
+    .btn-soft {
+      background: white;
+      color: var(--gx-blue-dark);
+      border: 1px solid var(--gx-line);
+    }
+
+    .btn-danger {
+      background: #fff1ef;
+      color: var(--gx-red);
+      border: 1px solid #ffd0ca;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 8px;
+      padding: 28px;
+      border-radius: 30px;
+      background:
+        linear-gradient(135deg, rgba(20,106,163,0.94), rgba(6,62,102,0.97)),
+        var(--gx-blue);
+      color: white;
+      box-shadow: var(--gx-shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      right: -165px;
+      top: -185px;
+      border-radius: 999px;
+      border: 44px solid rgba(255,255,255,0.22);
+      transform: rotate(-22deg);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 8px;
+      background: var(--gx-orange);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: end;
+    }
+
+    .hero-kicker {
+      color: #ffd874;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 6vw, 4.2rem);
+      letter-spacing: -0.07em;
+      line-height: 0.98;
+      margin: 0;
+    }
+
+    .hero p {
+      max-width: 720px;
+      color: rgba(255,255,255,0.76);
+      line-height: 1.7;
+      margin: 16px 0 0;
+    }
+
+    .status-panel {
+      justify-self: end;
+      width: min(100%, 390px);
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+    }
+
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 9px 0;
+      color: rgba(255,255,255,0.82);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .status-item:last-child { border-bottom: 0; }
+
+    .status-item strong {
+      color: white;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 13px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(20, 106, 163, 0.16);
+      background: #ffffff;
+      color: var(--gx-muted);
+      box-shadow: 0 10px 24px rgba(15,45,75,0.06);
+    }
+
+    .notice strong { color: var(--gx-blue-dark); }
+
+    .section {
+      margin-top: 34px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--gx-ink);
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      letter-spacing: -0.05em;
+    }
+
+    .section-note {
+      margin: 6px 0 0;
+      color: var(--gx-muted);
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      color: var(--gx-blue-dark);
+      border: 1px solid var(--gx-line);
+      font-weight: 900;
+    }
+
+    .tab.active {
+      color: #2b1b00;
+      background: var(--gx-orange);
+      border-color: transparent;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .panel, .match-card, .ranking-card {
+      background: var(--gx-card);
+      border: 1px solid var(--gx-line);
+      border-radius: var(--radius);
+      box-shadow: var(--gx-shadow);
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .match-card {
+      overflow: hidden;
+    }
+
+    .match-card.current {
+      border-color: var(--gx-orange);
+      box-shadow: 0 20px 50px rgba(246, 168, 0, 0.22);
+    }
+
+    .live-label {
+      color: #2b1b00;
+      background: var(--gx-orange);
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 1000;
+      letter-spacing: 0.08em;
+      margin-left: 8px;
+    }
+
+    .match-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      background: linear-gradient(90deg, #ffffff, #f5f9fe);
+      border-bottom: 1px solid var(--gx-line);
+    }
+
+    .stage {
+      color: var(--gx-blue);
+      font-size: 0.82rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .format {
+      color: #2b1b00;
+      background: #fff3cf;
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .match-body {
+      padding: 16px;
+    }
+
+    .side {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px dashed var(--gx-line);
+    }
+
+    .side:last-of-type {
+      border-bottom: 0;
+    }
+
+    .name {
+      font-size: 1.05rem;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .name.placeholder {
+      color: #9aa8b7;
+    }
+
+    .score-input {
+      width: 70px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--gx-line);
+      outline: none;
+      text-align: center;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      color: var(--gx-ink);
+      background: #fbfdff;
+    }
+
+    .score-input:focus {
+      border-color: var(--gx-orange);
+      box-shadow: 0 0 0 3px rgba(246,168,0,0.16);
+    }
+
+    .bo3-grid {
+      display: grid;
+      gap: 9px;
+      margin-top: 4px;
+    }
+
+    .set-row {
+      display: grid;
+      grid-template-columns: 70px 1fr auto auto;
+      align-items: center;
+      gap: 9px;
+      padding: 8px;
+      border-radius: 14px;
+      background: #f7fafc;
+      border: 1px solid var(--gx-line);
+    }
+
+    .set-label {
+      color: var(--gx-muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .set-name {
+      color: var(--gx-muted);
+      font-size: 0.82rem;
+    }
+
+    .match-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--gx-line);
+    }
+
+    .winner {
+      color: var(--gx-green);
+      font-weight: 950;
+    }
+
+    .pending {
+      color: var(--gx-muted);
+      font-weight: 850;
+    }
+
+    .small-btn {
+      padding: 8px 11px;
+      border-radius: 12px;
+      background: var(--gx-blue);
+      color: white;
+      font-weight: 900;
+    }
+
+    .small-btn.secondary {
+      background: #eef5fb;
+      color: var(--gx-blue-dark);
+      border: 1px solid var(--gx-line);
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    .rank-table th, .rank-table td {
+      padding: 11px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--gx-line);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rank-table th {
+      color: var(--gx-blue-dark);
+      background: #f2f7fc;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .rank-table tr:last-child td { border-bottom: 0; }
+
+    .rank-num {
+      width: 42px;
+      color: var(--gx-orange);
+      font-weight: 950;
+    }
+
+    .ranking-card {
+      padding: 16px;
+    }
+
+    .ranking-card h3 {
+      margin: 0 0 12px;
+      color: var(--gx-blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .hidden { display: none !important; }
+
+    .empty-state {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px dashed #b9c8d8;
+      background: rgba(255,255,255,0.72);
+      color: var(--gx-muted);
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .footer {
+      margin-top: 38px;
+      color: var(--gx-muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .topbar, .hero-content, .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .status-panel {
+        justify-self: stretch;
+      }
+
+      .nav-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app { width: min(100% - 20px, 1280px); }
+      .hero { padding: 22px; }
+      .topbar { position: static; }
+      .logo-card img { width: 96px; height: 50px; }
+      .set-row {
+        grid-template-columns: 58px 1fr 58px 58px;
+      }
+      .score-input { width: 58px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="logo-card" href="#">
+        <img src="assets/gxicc-logo.png" alt="GXICC Logo" />
+        <div class="title-wrap">
+          <div class="school">Xi'an Gaoxin No.1 High School ICC</div>
+          <h1>GXICC国三年级羽毛球联赛</h1>
+        </div>
+      </a>
+
+      <div></div>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="draw.html">Draw Ceremony</a>
+        <a class="btn btn-soft" href="viewer.html" target="_blank">Audience View</a>
+        <button class="btn btn-blue" onclick="syncDraw()">↻ Refresh Draw</button>
+        <button class="btn btn-soft" onclick="renderAll()">Update</button>
+        <button class="btn btn-danger" onclick="clearScores()">Clear Scores</button>
+        <button class="btn btn-danger" onclick="resetDrawData()">Reset Draw</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div>
+          <div class="hero-kicker">Official Scoreboard · Auto Advancement</div>
+          <h2>Match Control Center</h2>
+          <p>输入比分后点击 Save，系统会自动判断胜者、推进下一轮，并更新男单小组排名。抽签页面保存结果后，回到这里点击 Refresh Draw 即可把 TBD 替换成人名。</p>
+        </div>
+        <div class="status-panel">
+          <div class="status-item"><span>Draw Status</span><strong id="drawStatus">Not synced</strong></div>
+          <div class="status-item"><span>Score Data</span><strong id="scoreStatus">Ready</strong></div>
+          <div class="status-item"><span>Current View</span><strong id="viewStatus">Day 1</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="notice" id="notice">
+      <strong>Workflow:</strong> 先进入 Draw Ceremony，点击 Save Official Draw；回到主页面后点击 ↻ Refresh Draw；之后即可录入比分。
+    </div>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Schedule</h2>
+          <p class="section-note">Day 1 完成混双全赛程与女单半决赛；Day 2 完成男单与女单决赛日。</p>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" id="tabDay1" onclick="showTab('day1')">Day 1</button>
+        <button class="tab" id="tabDay2" onclick="showTab('day2')">Day 2</button>
+        <button class="tab" id="tabRankings" onclick="showTab('rankings')">Men's Rankings</button>
+      </div>
+
+      <div id="day1View" class="grid-2"></div>
+      <div id="day2View" class="grid-2 hidden"></div>
+      <div id="rankingsView" class="grid-2 hidden"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Final Bracket Preview</h2>
+          <p class="section-note">这里会随着比分录入自动更新关键晋级位置。</p>
+        </div>
+      </div>
+      <div id="bracketPreview" class="grid-3"></div>
+    </section>
+
+    <footer class="footer">
+      GXICC国三年级羽毛球联赛 · V2 Scoreboard + Draw Sync
+    </footer>
+  </main>
+
+  <script>
+    const DRAW_KEY = "gxicc_badminton_draw_v2";
+    const SCORES_KEY = "gxicc_badminton_scores_v2";
+    const CURRENT_KEY = "gxicc_badminton_current_match_v2";
+
+    const defaultDraw = {
+      mens: {
+        groupA: ["TBD", "TBD", "TBD"],
+        groupB: ["TBD", "TBD", "TBD"]
+      },
+      womens: {
+        sf1: ["TBD", "TBD"],
+        sf2: ["TBD", "TBD"]
+      },
+      mixed: {
+        qf1: ["TBD", "TBD"],
+        qf2: ["TBD", "TBD"],
+        qf3: ["TBD", "TBD"],
+        qf4: ["TBD", "TBD"]
+      }
+    };
+
+    let draw = structuredClone(defaultDraw);
+    let scores = loadJSON(SCORES_KEY, {});
+    let currentMatchId = localStorage.getItem(CURRENT_KEY) || "";
+    let activeTab = "day1";
+
+    const matchDefs = {
+      mixed_qf1: { stage: "Mixed QF1", format: "15-point BO1", type: "bo1", day: "day1", event: "mixed", slots: () => draw.mixed.qf1 },
+      mixed_qf2: { stage: "Mixed QF2", format: "15-point BO1", type: "bo1", day: "day1", event: "mixed", slots: () => draw.mixed.qf2 },
+      mixed_qf3: { stage: "Mixed QF3", format: "15-point BO1", type: "bo1", day: "day1", event: "mixed", slots: () => draw.mixed.qf3 },
+      mixed_qf4: { stage: "Mixed QF4", format: "15-point BO1", type: "bo1", day: "day1", event: "mixed", slots: () => draw.mixed.qf4 },
+      womens_sf1: { stage: "Women's SF1", format: "15-point BO1", type: "bo1", day: "day1", event: "womens", slots: () => draw.womens.sf1 },
+      mixed_sf1: { stage: "Mixed SF1", format: "15-point BO1", type: "bo1", day: "day1", event: "mixed", slots: () => [winner("mixed_qf1") || "Winner QF1", winner("mixed_qf2") || "Winner QF2"] },
+      womens_sf2: { stage: "Women's SF2", format: "15-point BO1", type: "bo1", day: "day1", event: "womens", slots: () => draw.womens.sf2 },
+      mixed_sf2: { stage: "Mixed SF2", format: "15-point BO1", type: "bo1", day: "day1", event: "mixed", slots: () => [winner("mixed_qf3") || "Winner QF3", winner("mixed_qf4") || "Winner QF4"] },
+      mixed_final: { stage: "Mixed Final", format: "15-point BO3", type: "bo3", day: "day1", event: "mixed", slots: () => [winner("mixed_sf1") || "Winner SF1", winner("mixed_sf2") || "Winner SF2"] },
+
+      mens_ga1: { stage: "Men's Group A M1", format: "11-point BO1", type: "bo1", day: "day2", event: "mens", group: "A", slots: () => [draw.mens.groupA[0], draw.mens.groupA[1]] },
+      mens_gb1: { stage: "Men's Group B M1", format: "11-point BO1", type: "bo1", day: "day2", event: "mens", group: "B", slots: () => [draw.mens.groupB[0], draw.mens.groupB[1]] },
+      mens_ga2: { stage: "Men's Group A M2", format: "11-point BO1", type: "bo1", day: "day2", event: "mens", group: "A", slots: () => [draw.mens.groupA[0], draw.mens.groupA[2]] },
+      mens_gb2: { stage: "Men's Group B M2", format: "11-point BO1", type: "bo1", day: "day2", event: "mens", group: "B", slots: () => [draw.mens.groupB[0], draw.mens.groupB[2]] },
+      womens_bronze: { stage: "Women's Bronze", format: "15-point BO1", type: "bo1", day: "day2", event: "womens", slots: () => [loser("womens_sf1") || "Loser SF1", loser("womens_sf2") || "Loser SF2"] },
+      mens_ga3: { stage: "Men's Group A M3", format: "11-point BO1", type: "bo1", day: "day2", event: "mens", group: "A", slots: () => [draw.mens.groupA[1], draw.mens.groupA[2]] },
+      mens_gb3: { stage: "Men's Group B M3", format: "11-point BO1", type: "bo1", day: "day2", event: "mens", group: "B", slots: () => [draw.mens.groupB[1], draw.mens.groupB[2]] },
+      mens_sf1: { stage: "Men's SF1", format: "15-point BO1", type: "bo1", day: "day2", event: "mens", slots: () => {
+        const A = groupRanking("A");
+        const B = groupRanking("B");
+        return [mensGroupComplete("A") ? A[0].name : "Group A #1", mensGroupComplete("B") ? B[1].name : "Group B #2"];
+      }},
+      mens_sf2: { stage: "Men's SF2", format: "15-point BO1", type: "bo1", day: "day2", event: "mens", slots: () => {
+        const A = groupRanking("A");
+        const B = groupRanking("B");
+        return [mensGroupComplete("B") ? B[0].name : "Group B #1", mensGroupComplete("A") ? A[1].name : "Group A #2"];
+      }},
+      womens_final: { stage: "Women's Final", format: "15-point BO1", type: "bo1", day: "day2", event: "womens", slots: () => [winner("womens_sf1") || "Winner SF1", winner("womens_sf2") || "Winner SF2"] },
+      mens_final: { stage: "Men's Final", format: "15-point BO3", type: "bo3", day: "day2", event: "mens", slots: () => [winner("mens_sf1") || "Winner SF1", winner("mens_sf2") || "Winner SF2"] }
+    };
+
+    const day1Order = ["mixed_qf1", "mixed_qf2", "mixed_qf3", "mixed_qf4", "womens_sf1", "mixed_sf1", "womens_sf2", "mixed_sf2", "mixed_final"];
+    const day2Order = ["mens_ga1", "mens_gb1", "mens_ga2", "mens_gb2", "womens_bronze", "mens_ga3", "mens_gb3", "mens_sf1", "mens_sf2", "womens_final", "mens_final"];
+
+    function loadJSON(key, fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) ?? fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function saveScores() {
+      localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
+      document.getElementById("scoreStatus").textContent = "Saved";
+    }
+
+    function syncDraw() {
+      const saved = loadJSON(DRAW_KEY, null);
+      if (!saved) {
+        setNotice("还没有找到抽签结果。请先进入 Draw Ceremony，点击 Save Official Draw。");
+        draw = structuredClone(defaultDraw);
+      } else {
+        draw = saved;
+        setNotice("抽签结果已同步。TBD 已更新为正式名单。");
+      }
+      renderAll();
+    }
+
+    function setNotice(text) {
+      document.getElementById("notice").innerHTML = `<strong>Notice:</strong> ${text}`;
+    }
+
+    function showTab(tab) {
+      activeTab = tab;
+      document.getElementById("day1View").classList.toggle("hidden", tab !== "day1");
+      document.getElementById("day2View").classList.toggle("hidden", tab !== "day2");
+      document.getElementById("rankingsView").classList.toggle("hidden", tab !== "rankings");
+      document.getElementById("tabDay1").classList.toggle("active", tab === "day1");
+      document.getElementById("tabDay2").classList.toggle("active", tab === "day2");
+      document.getElementById("tabRankings").classList.toggle("active", tab === "rankings");
+      document.getElementById("viewStatus").textContent = tab === "day1" ? "Day 1" : tab === "day2" ? "Day 2" : "Rankings";
+    }
+
+    function scoreOf(id) {
+      return scores[id] || {};
+    }
+
+    function isPlaceholder(name) {
+      return !name || name.includes("TBD") || name.includes("Winner") || name.includes("Loser") || name.includes("Group");
+    }
+
+    function completedBO1(id) {
+      const s = scoreOf(id);
+      return isFiniteNumber(s.a) && isFiniteNumber(s.b) && Number(s.a) !== Number(s.b);
+    }
+
+    function winner(id) {
+      const def = matchDefs[id];
+      if (!def) return null;
+      const [a, b] = def.slots();
+
+      if (def.type === "bo1") {
+        const s = scoreOf(id);
+        if (!completedBO1(id)) return null;
+        return Number(s.a) > Number(s.b) ? a : b;
+      }
+
+      const sets = scoreOf(id).sets || [];
+      let winsA = 0;
+      let winsB = 0;
+      sets.forEach(set => {
+        if (isFiniteNumber(set.a) && isFiniteNumber(set.b) && Number(set.a) !== Number(set.b)) {
+          Number(set.a) > Number(set.b) ? winsA++ : winsB++;
+        }
+      });
+      if (winsA >= 2) return a;
+      if (winsB >= 2) return b;
+      return null;
+    }
+
+    function loser(id) {
+      const def = matchDefs[id];
+      if (!def) return null;
+      const [a, b] = def.slots();
+      const w = winner(id);
+      if (!w) return null;
+      return w === a ? b : a;
+    }
+
+    function isFiniteNumber(value) {
+      return value !== "" && value !== null && value !== undefined && Number.isFinite(Number(value));
+    }
+
+    function setCurrentMatch(id) {
+      currentMatchId = id;
+      localStorage.setItem(CURRENT_KEY, id);
+      setNotice("当前比赛已设置。Audience View 会自动显示该比赛。");
+      renderAll();
+    }
+
+    function saveBO1(id) {
+      const a = document.getElementById(`${id}_a`).value;
+      const b = document.getElementById(`${id}_b`).value;
+      scores[id] = { type: "bo1", a, b };
+      saveScores();
+      renderAll();
+    }
+
+    function saveBO3(id) {
+      const sets = [1, 2, 3].map(i => ({
+        a: document.getElementById(`${id}_set${i}_a`).value,
+        b: document.getElementById(`${id}_set${i}_b`).value
+      }));
+      scores[id] = { type: "bo3", sets };
+      saveScores();
+      renderAll();
+    }
+
+    function resetDrawData() {
+      const ok = confirm("Reset draw results? 为避免旧比分和新签表冲突，这会同时清除抽签、比分和当前比赛。");
+      if (!ok) return;
+      draw = structuredClone(defaultDraw);
+      scores = {};
+      currentMatchId = "";
+      localStorage.removeItem(DRAW_KEY);
+      localStorage.removeItem(SCORES_KEY);
+      localStorage.removeItem(CURRENT_KEY);
+      setNotice("抽签、比分和当前比赛已重置。请重新进入 Draw Ceremony 保存抽签。");
+      renderAll();
+    }
+
+    function clearScores() {
+      const ok = confirm("Clear all score inputs? 抽签结果不会被清除。");
+      if (!ok) return;
+      scores = {};
+      localStorage.removeItem(SCORES_KEY);
+      renderAll();
+      setNotice("比分已清空，抽签结果保留。");
+    }
+
+    function renderMatch(id) {
+      const def = matchDefs[id];
+      const [a, b] = def.slots();
+      const w = winner(id);
+      const isCurrent = currentMatchId === id;
+      const liveBadge = isCurrent ? `<span class="live-label">LIVE</span>` : "";
+      const canScore = !isPlaceholder(a) && !isPlaceholder(b);
+      const s = scoreOf(id);
+
+      const winnerText = w ? `<span class="winner">Winner: ${w}</span>` : `<span class="pending">${canScore ? "Pending result" : "Waiting for draw / previous round"}</span>`;
+
+      if (def.type === "bo1") {
+        return `
+          <article class="match-card ${isCurrent ? "current" : ""}">
+            <div class="match-head">
+              <div class="stage">${def.stage}${liveBadge}</div>
+              <div class="format">${def.format}</div>
+            </div>
+            <div class="match-body">
+              <div class="side">
+                <div class="name ${isPlaceholder(a) ? "placeholder" : ""}">${a}</div>
+                <input ${canScore ? "" : "disabled"} id="${id}_a" class="score-input" type="number" min="0" value="${s.a ?? ""}" />
+              </div>
+              <div class="side">
+                <div class="name ${isPlaceholder(b) ? "placeholder" : ""}">${b}</div>
+                <input ${canScore ? "" : "disabled"} id="${id}_b" class="score-input" type="number" min="0" value="${s.b ?? ""}" />
+              </div>
+              <div class="match-footer">
+                ${winnerText}
+                <div class="footer-actions">
+                  <button class="small-btn secondary" ${canScore ? "" : "disabled"} onclick="setCurrentMatch('${id}')">Set Current</button>
+                  <button class="small-btn" ${canScore ? "" : "disabled"} onclick="saveBO1('${id}')">Save</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      const sets = s.sets || [{}, {}, {}];
+      return `
+        <article class="match-card ${isCurrent ? "current" : ""}">
+          <div class="match-head">
+            <div class="stage">${def.stage}${liveBadge}</div>
+            <div class="format">${def.format}</div>
+          </div>
+          <div class="match-body">
+            <div class="side">
+              <div class="name ${isPlaceholder(a) ? "placeholder" : ""}">${a}</div>
+            </div>
+            <div class="side">
+              <div class="name ${isPlaceholder(b) ? "placeholder" : ""}">${b}</div>
+            </div>
+
+            <div class="bo3-grid">
+              ${[1,2,3].map(i => `
+                <div class="set-row">
+                  <span class="set-label">Set ${i}</span>
+                  <span class="set-name">A / B</span>
+                  <input ${canScore ? "" : "disabled"} id="${id}_set${i}_a" class="score-input" type="number" min="0" value="${sets[i-1]?.a ?? ""}" />
+                  <input ${canScore ? "" : "disabled"} id="${id}_set${i}_b" class="score-input" type="number" min="0" value="${sets[i-1]?.b ?? ""}" />
+                </div>
+              `).join("")}
+            </div>
+
+            <div class="match-footer">
+              ${winnerText}
+              <div class="footer-actions">
+                <button class="small-btn secondary" ${canScore ? "" : "disabled"} onclick="setCurrentMatch('${id}')">Set Current</button>
+                <button class="small-btn" ${canScore ? "" : "disabled"} onclick="saveBO3('${id}')">Save</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function groupMatches(group) {
+      return group === "A" ? ["mens_ga1", "mens_ga2", "mens_ga3"] : ["mens_gb1", "mens_gb2", "mens_gb3"];
+    }
+
+    function mensGroupComplete(group) {
+      return groupMatches(group).every(id => !!winner(id));
+    }
+
+    function groupRanking(group) {
+      const names = group === "A" ? draw.mens.groupA : draw.mens.groupB;
+      const table = {};
+      names.forEach(name => {
+        table[name] = { name, w: 0, l: 0, pf: 0, pa: 0, diff: 0 };
+      });
+
+      groupMatches(group).forEach(id => {
+        const def = matchDefs[id];
+        const [a, b] = def.slots();
+        const s = scoreOf(id);
+
+        if (!table[a] || !table[b]) return;
+        if (!completedBO1(id)) return;
+
+        const sa = Number(s.a);
+        const sb = Number(s.b);
+
+        table[a].pf += sa;
+        table[a].pa += sb;
+        table[b].pf += sb;
+        table[b].pa += sa;
+
+        if (sa > sb) {
+          table[a].w++;
+          table[b].l++;
+        } else {
+          table[b].w++;
+          table[a].l++;
+        }
+      });
+
+      Object.values(table).forEach(row => {
+        row.diff = row.pf - row.pa;
+      });
+
+      return Object.values(table).sort((x, y) =>
+        y.w - x.w ||
+        y.diff - x.diff ||
+        y.pf - x.pf ||
+        x.name.localeCompare(y.name, "zh-Hans-CN")
+      );
+    }
+
+    function renderRankingCard(group) {
+      const rows = groupRanking(group);
+      return `
+        <article class="ranking-card">
+          <h3>Men's Group ${group}</h3>
+          <table class="rank-table">
+            <thead>
+              <tr>
+                <th>#</th><th>Player</th><th>W</th><th>L</th><th>PF</th><th>PA</th><th>+/-</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map((row, idx) => `
+                <tr>
+                  <td class="rank-num">${idx + 1}</td>
+                  <td>${row.name}</td>
+                  <td>${row.w}</td>
+                  <td>${row.l}</td>
+                  <td>${row.pf}</td>
+                  <td>${row.pa}</td>
+                  <td>${row.diff}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </article>
+      `;
+    }
+
+    function renderBracketPreview() {
+      const cards = [
+        {
+          title: "Mixed Doubles",
+          lines: [
+            `SF1：${winner("mixed_qf1") || "Winner QF1"} vs ${winner("mixed_qf2") || "Winner QF2"}`,
+            `SF2：${winner("mixed_qf3") || "Winner QF3"} vs ${winner("mixed_qf4") || "Winner QF4"}`,
+            `Final：${winner("mixed_sf1") || "Winner SF1"} vs ${winner("mixed_sf2") || "Winner SF2"}`,
+            `Champion：${winner("mixed_final") || "TBD"}`
+          ]
+        },
+        {
+          title: "Women's Singles",
+          lines: [
+            `Bronze：${loser("womens_sf1") || "Loser SF1"} vs ${loser("womens_sf2") || "Loser SF2"}`,
+            `Final：${winner("womens_sf1") || "Winner SF1"} vs ${winner("womens_sf2") || "Winner SF2"}`,
+            `Champion：${winner("womens_final") || "TBD"}`
+          ]
+        },
+        {
+          title: "Men's Singles",
+          lines: [
+            `SF1：${matchDefs.mens_sf1.slots()[0]} vs ${matchDefs.mens_sf1.slots()[1]}`,
+            `SF2：${matchDefs.mens_sf2.slots()[0]} vs ${matchDefs.mens_sf2.slots()[1]}`,
+            `Final：${winner("mens_sf1") || "Winner SF1"} vs ${winner("mens_sf2") || "Winner SF2"}`,
+            `Champion：${winner("mens_final") || "TBD"}`
+          ]
+        }
+      ];
+
+      document.getElementById("bracketPreview").innerHTML = cards.map(card => `
+        <article class="panel">
+          <h3 style="margin:0 0 12px;color:var(--gx-blue-dark);">${card.title}</h3>
+          ${card.lines.map(line => `<div class="empty-state" style="padding:12px;text-align:left;margin-bottom:10px;">${line}</div>`).join("")}
+        </article>
+      `).join("");
+    }
+
+    function renderAll() {
+      const savedDraw = loadJSON(DRAW_KEY, null);
+      document.getElementById("drawStatus").textContent = savedDraw ? "Synced / Saved" : "Not synced";
+      document.getElementById("scoreStatus").textContent = Object.keys(scores).length ? "Saved" : "Ready";
+
+      document.getElementById("day1View").innerHTML = day1Order.map(renderMatch).join("");
+      document.getElementById("day2View").innerHTML = day2Order.map(renderMatch).join("");
+      document.getElementById("rankingsView").innerHTML = renderRankingCard("A") + renderRankingCard("B");
+      renderBracketPreview();
+      showTab(activeTab);
+    }
+
+    // Auto sync once on page load if a draw result exists.
+    const savedDrawOnLoad = loadJSON(DRAW_KEY, null);
+    if (savedDrawOnLoad) {
+      draw = savedDrawOnLoad;
+      setNotice("已自动读取本机保存的抽签结果。需要重新抽签时请进入 Draw Ceremony。");
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>

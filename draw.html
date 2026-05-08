@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GXICC国三年级羽毛球联赛 · Draw Ceremony</title>
+  <style>
+    :root {
+      --gx-orange: #f6a800;
+      --gx-blue: #146aa3;
+      --gx-blue-dark: #063e66;
+      --gx-ink: #0b1b2b;
+      --gx-muted: #667085;
+      --gx-bg: #f4f7fb;
+      --gx-card: #ffffff;
+      --gx-line: #dce6f1;
+      --gx-shadow: 0 18px 44px rgba(15, 45, 75, 0.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--gx-ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(246, 168, 0, 0.22), transparent 34%),
+        radial-gradient(circle at 90% 7%, rgba(20, 106, 163, 0.22), transparent 34%),
+        linear-gradient(180deg, #ffffff 0%, var(--gx-bg) 55%, #edf4fb 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button, select { font: inherit; }
+    button { border: 0; cursor: pointer; }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .logo-wrap img {
+      width: 126px;
+      height: 62px;
+      object-fit: contain;
+      background: white;
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: var(--gx-shadow);
+      border: 1px solid rgba(20,106,163,0.12);
+    }
+
+    .school {
+      color: var(--gx-blue);
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 2px 0 0;
+      font-size: clamp(1.4rem, 3vw, 2.15rem);
+      letter-spacing: -0.055em;
+      line-height: 1.1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 15px;
+      border-radius: 999px;
+      font-weight: 950;
+      transition: 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--gx-orange);
+      color: #2b1b00;
+      box-shadow: 0 14px 28px rgba(246,168,0,0.22);
+    }
+
+    .btn-blue {
+      background: var(--gx-blue);
+      color: white;
+      box-shadow: 0 14px 28px rgba(20,106,163,0.18);
+    }
+
+    .btn-soft {
+      background: white;
+      color: var(--gx-blue-dark);
+      border: 1px solid var(--gx-line);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      min-height: 270px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(20,106,163,0.96), rgba(6,62,102,0.98));
+      color: white;
+      box-shadow: var(--gx-shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      right: -185px;
+      top: -205px;
+      border-radius: 999px;
+      border: 48px solid rgba(255,255,255,0.22);
+      transform: rotate(-24deg);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 8px;
+      background: var(--gx-orange);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      color: #ffd874;
+      font-weight: 950;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.86rem;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(2.1rem, 7vw, 5rem);
+      letter-spacing: -0.075em;
+      line-height: 0.94;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .panel, .result-card {
+      background: white;
+      border: 1px solid var(--gx-line);
+      border-radius: var(--radius);
+      box-shadow: var(--gx-shadow);
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    label {
+      display: block;
+      color: var(--gx-blue);
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 15px;
+      border: 1px solid var(--gx-line);
+      color: var(--gx-ink);
+      background: #fbfdff;
+      outline: none;
+      font-weight: 850;
+    }
+
+    .draw-stage {
+      display: grid;
+      place-items: center;
+      min-height: 340px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(246,168,0,0.20), transparent 35%),
+        linear-gradient(135deg, #ffffff, #f4f9ff);
+      border: 1px dashed rgba(20,106,163,0.34);
+      text-align: center;
+    }
+
+    .draw-word {
+      min-height: 1.2em;
+      font-size: clamp(2.1rem, 6vw, 4.6rem);
+      line-height: 1;
+      font-weight: 1000;
+      letter-spacing: -0.08em;
+      color: var(--gx-blue-dark);
+      text-shadow: 0 10px 30px rgba(20,106,163,0.12);
+    }
+
+    .draw-sub {
+      margin-top: 12px;
+      color: var(--gx-muted);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .result-card {
+      overflow: hidden;
+    }
+
+    .result-head {
+      padding: 12px 14px;
+      color: #2b1b00;
+      background: var(--gx-orange);
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .result-body {
+      padding: 14px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .slot {
+      padding: 12px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--gx-line);
+      background: #f8fbff;
+      font-weight: 900;
+      line-height: 1.42;
+    }
+
+    .notice {
+      margin-top: 16px;
+      padding: 13px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(20,106,163,0.14);
+      background: white;
+      color: var(--gx-muted);
+      line-height: 1.6;
+      box-shadow: 0 10px 24px rgba(15,45,75,0.06);
+    }
+
+    .notice strong {
+      color: var(--gx-blue-dark);
+    }
+
+    .saved {
+      color: #13895c;
+      font-weight: 950;
+    }
+
+    @media (max-width: 900px) {
+      .topbar, .layout, .results {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="topbar">
+      <a class="logo-wrap" href="index.html">
+        <img src="assets/gxicc-logo.png" alt="GXICC Logo" />
+        <div>
+          <div class="school">Xi'an Gaoxin No.1 High School ICC</div>
+          <h1>GXICC国三年级羽毛球联赛</h1>
+        </div>
+      </a>
+      <a class="btn btn-soft" href="index.html">← Back to Scoreboard</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="kicker">Official Draw Ceremony</div>
+        <h2>Draw Reveal</h2>
+        <p>点击 Begin Draw 播放抽签动画。结果为预设签表，用于保证比赛观赏性与时间安排。点击 Save Official Draw 后，主页面可以通过 Refresh Draw 读取正式名单。</p>
+        <div class="controls">
+          <button class="btn btn-primary" onclick="beginDraw()">Begin Draw</button>
+          <button class="btn btn-blue" onclick="revealAll()">Reveal All</button>
+          <button class="btn btn-soft" onclick="saveOfficialDraw()">Save Official Draw</button>
+          <button class="btn btn-soft" onclick="resetOfficialDraw()">Reset Draw</button>
+          <a class="btn btn-soft" href="index.html">Return</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <label for="eventSelect">Select Event</label>
+        <select id="eventSelect" onchange="setEvent(this.value)">
+          <option value="mixed">Mixed Doubles 混双</option>
+          <option value="mens">Men's Singles 男单</option>
+          <option value="womens">Women's Singles 女单</option>
+        </select>
+
+        <div class="notice" id="notice">
+          <strong>Ready:</strong> 选择项目后点击 Begin Draw。保存后请回到主页面刷新抽签。
+        </div>
+      </div>
+
+      <div>
+        <div class="draw-stage">
+          <div>
+            <div id="drawWord" class="draw-word">Ready</div>
+            <div id="drawSub" class="draw-sub">Mixed Doubles · Knockout Bracket</div>
+          </div>
+        </div>
+        <div id="results" class="results"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const DRAW_KEY = "gxicc_badminton_draw_v2";
+
+    const officialDraw = {
+      mens: {
+        groupA: ["林大庸", "朱宸诺", "杜泊儒"],
+        groupB: ["王子墨", "王子一", "严钰淼"]
+      },
+      womens: {
+        sf1: ["伍雯婕", "张馨文"],
+        sf2: ["张舒渊", "梅兰"]
+      },
+      mixed: {
+        qf1: ["梅兰 / 杜泊儒", "薛钰涵 / 刘佳康"],
+        qf2: ["林大庸 / 谷佳桦", "张舒渊 / 朱宸诺"],
+        qf3: ["张馨文 / 王子一", "赵毅康 / 祁奕欣"],
+        qf4: ["李林泽 / 段嘉淇", "伍雯婕 / 刘昊轩"]
+      }
+    };
+
+    const eventConfig = {
+      mixed: {
+        title: "Mixed Doubles · Knockout Bracket",
+        names: [
+          "梅兰 / 杜泊儒", "薛钰涵 / 刘佳康",
+          "林大庸 / 谷佳桦", "张舒渊 / 朱宸诺",
+          "张馨文 / 王子一", "赵毅康 / 祁奕欣",
+          "李林泽 / 段嘉淇", "伍雯婕 / 刘昊轩"
+        ],
+        sections: {
+          "Upper Half": [
+            "QF1：梅兰 / 杜泊儒 vs 薛钰涵 / 刘佳康",
+            "QF2：林大庸 / 谷佳桦 vs 张舒渊 / 朱宸诺"
+          ],
+          "Lower Half": [
+            "QF3：张馨文 / 王子一 vs 赵毅康 / 祁奕欣",
+            "QF4：李林泽 / 段嘉淇 vs 伍雯婕 / 刘昊轩"
+          ]
+        }
+      },
+      mens: {
+        title: "Men's Singles · Group Stage",
+        names: ["林大庸", "王子墨", "王子一", "朱宸诺", "严钰淼", "杜泊儒"],
+        sections: {
+          "Group A": ["林大庸", "朱宸诺", "杜泊儒"],
+          "Group B": ["王子墨", "王子一", "严钰淼"]
+        }
+      },
+      womens: {
+        title: "Women's Singles · Semifinals",
+        names: ["伍雯婕", "张舒渊", "梅兰", "张馨文"],
+        sections: {
+          "Semifinal 1": ["伍雯婕 vs 张馨文"],
+          "Semifinal 2": ["张舒渊 vs 梅兰"]
+        }
+      }
+    };
+
+    let selected = "mixed";
+    let timer = null;
+
+    function setEvent(key) {
+      selected = key;
+      document.getElementById("drawWord").textContent = "Ready";
+      document.getElementById("drawSub").textContent = eventConfig[key].title;
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("notice").innerHTML = `<strong>Selected:</strong> ${eventConfig[key].title}`;
+    }
+
+    function beginDraw() {
+      const config = eventConfig[selected];
+      const word = document.getElementById("drawWord");
+      const sub = document.getElementById("drawSub");
+      const results = document.getElementById("results");
+      let count = 0;
+
+      results.innerHTML = "";
+      sub.textContent = "Drawing...";
+      clearInterval(timer);
+
+      timer = setInterval(() => {
+        word.textContent = config.names[Math.floor(Math.random() * config.names.length)];
+        count++;
+        if (count > 32) {
+          clearInterval(timer);
+          word.textContent = "Locked In";
+          sub.textContent = config.title;
+          renderResults(config);
+        }
+      }, 72);
+    }
+
+    function renderResults(config) {
+      const results = document.getElementById("results");
+      results.innerHTML = Object.entries(config.sections).map(([title, lines]) => `
+        <article class="result-card">
+          <div class="result-head">${title}</div>
+          <div class="result-body">
+            ${lines.map(line => `<div class="slot">${line}</div>`).join("")}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function revealAll() {
+      clearInterval(timer);
+      const config = eventConfig[selected];
+      document.getElementById("drawWord").textContent = "Locked In";
+      document.getElementById("drawSub").textContent = config.title;
+      renderResults(config);
+    }
+
+    function resetOfficialDraw() {
+      const ok = confirm("Reset saved draw? 这会清除已保存的抽签结果。主页面刷新后会回到 TBD。");
+      if (!ok) return;
+      localStorage.removeItem(DRAW_KEY);
+      document.getElementById("notice").innerHTML = `<strong>Reset:</strong> Saved draw has been removed. Return to scoreboard and click Refresh Draw.`;
+    }
+
+    function saveOfficialDraw() {
+      localStorage.setItem(DRAW_KEY, JSON.stringify(officialDraw));
+      document.getElementById("notice").innerHTML = `<strong class="saved">Saved:</strong> Official draw has been saved. Return to scoreboard and click Refresh Draw.`;
+    }
+
+    setEvent("mixed");
+  </script>
+</body>
+</html>

@@ -362,12 +362,24 @@
 
 
     .round-title.final-round {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: start;
+      justify-self: start;
+    
+      width: auto;
+      height: auto;
+      min-height: 0;
+    
       color: #2b1b00;
       background: #fff3cf;
       border: 1px solid rgba(246,168,0,0.42);
-      padding: 8px 10px;
+      padding: 8px 12px;
       border-radius: 999px;
-      width: fit-content;
+    
+      line-height: 1.1;
+      white-space: nowrap;
     }
 
     .match-label {
